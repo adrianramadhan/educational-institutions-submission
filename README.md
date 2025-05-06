@@ -32,8 +32,19 @@ conda activate edutech_ml
 pip install pandas scikit-learn matplotlib seaborn streamlit joblib sqlalchemy psycopg2-binary
 
 # 3. (Optional) untuk Metabase: tidak perlu install, cukup koneksi ke Supabase
+- **Credential Supabase (untuk Metabase)**:
 
+  - Host: `aws-0-ap-southeast-1.pooler.supabase.com`
+  - Port: `6543`
+  - Database: `postgres`
+  - User: `postgres.yvfheuwphfzqfsppwybl`
+  - Password: `<YOUR-PASSWORD>`
+  - Pool mode: `transaction`
 ```
+
+- **Email dan password Metabase**:
+  - Email: adrianramadhan881@gmail.com
+  - Password: root123
 
 ## Business Dashboard
 Kami membangun dashboard Student Risk Insights di Metabase, terhubung ke Supabase Postgres.
@@ -41,17 +52,17 @@ Kami membangun dashboard Student Risk Insights di Metabase, terhubung ke Supabas
 
 Dashboard menampilkan 6 question utama:
 
-Dropout Rate per Marital Status
+1. Dropout Rate per Marital Status
 
-Dropout vs Scholarship Holder
+2. Dropout vs Scholarship Holder
 
-Avg Admission Grade by Application Mode
+3. Avg Admission Grade by Application Mode
 
-Dropout Rate by Attendance Time
+4. Dropout Rate by Attendance Time
 
-Dropout by Parents’ Education
+5. Dropout by Parents’ Education
 
-Top 5 Courses by Dropout %
+6. Top 5 Courses by Dropout %
 
 Tim bisnis dapat memfilter per course, cohort year, dan segmentasi demografis untuk insight real‑time.
 
