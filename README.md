@@ -48,7 +48,7 @@ pip install pandas scikit-learn matplotlib seaborn streamlit joblib sqlalchemy p
 - **Email dan password Metabase**:
   - Email: adrianramadhan881@gmail.com
   - Password: root123
-
+```
 ## Business Dashboard
 Kami membangun dashboard Student Risk Insights di Metabase, terhubung ke Supabase Postgres.
 
