@@ -1,37 +1,85 @@
 # Proyek Akhir: Menyelesaikan Permasalahan Perusahaan Edutech
 
-## Business Understanding
-Jelaskan latar belakang bisnis dari perushaan tersebut.
+## Business Understanding  
+Perusahaan Edutech “Jaya Jaya Learning” menyediakan platform pembelajaran daring untuk mahasiswa program sarjana di berbagai jurusan. Misi mereka adalah menurunkan angka dropout dan meningkatkan tingkat kelulusan dengan intervensi tepat waktu. Saat ini belum ada sistem pemantauan risiko dan dashboard yang dapat membantu tim akademik mengenali mahasiswa berisiko tinggi sehingga intervensi sering terlambat.
 
-### Permasalahan Bisnis
-Tuliskan seluruh permasalahan bisnis yang akan diselesaikan.
+### Permasalahan Bisnis  
+1. **Tingginya angka dropout** (~32 % dari total mahasiswa)  
+2. **Kurangnya visibilitas**: tidak ada dashboard real‑time untuk memonitor risiko per segmen (course, marital status, beasiswa, dsb.)  
+3. **Intervensi terlambat**: tim akademik hanya tahu mahasiswa bermasalah setelah nilai semester turun drastis  
+4. **Sumber daya terbatas**: harus memprioritaskan program mentoring dan beasiswa ke mahasiswa yang paling membutuhkan  
 
-### Cakupan Proyek
-Tuliskan cakupan proyek yang akan dikerjakan.
+### Cakupan Proyek  
+- Data preprocessing dan EDA pada dataset “Students’ Performance”  
+- Pengembangan model klasifikasi (Logistic Regression, RandomForest, Gradient Boosting) untuk memprediksi risiko dropout  
+- Pembuatan dashboard analitik di Metabase untuk business monitoring  
+- Pembuatan prototype Streamlit untuk prediksi real‑time oleh pengguna (admin akademik)  
+- Export data ke Supabase PostgreSQL sebagai data source terpusat  
 
-### Persiapan
+## Persiapan  
 
-Sumber data: ....
+**Sumber data**:  
+- `students_performance.csv` (4424 baris, 37 kolom) berisi demografi, prestasi akademik sem‑1 & sem‑2, dan status akhir (Dropout/Graduate/Enrolled).  
+- Link Dataset : https://github.com/dicodingacademy/dicoding_dataset/blob/main/students_performance/data.csv
 
-Setup environment:
-```
+**Setup environment**:  
+```bash
+# 1. Buat virtual environment
+conda create -n edutech_ml python=3.11 -y
+conda activate edutech_ml
+
+# 2. Install dependencies
+pip install pandas scikit-learn matplotlib seaborn streamlit joblib sqlalchemy psycopg2-binary
+
+# 3. (Optional) untuk Metabase: tidak perlu install, cukup koneksi ke Supabase
 
 ```
 
 ## Business Dashboard
-Jelaskan tentang business dashboard yang telah dibuat. Jika ada, sertakan juga link untuk mengakses dashboard tersebut.
+Kami membangun dashboard Student Risk Insights di Metabase, terhubung ke Supabase Postgres.
+
+
+Dashboard menampilkan 6 question utama:
+
+Dropout Rate per Marital Status
+
+Dropout vs Scholarship Holder
+
+Avg Admission Grade by Application Mode
+
+Dropout Rate by Attendance Time
+
+Dropout by Parents’ Education
+
+Top 5 Courses by Dropout %
+
+Tim bisnis dapat memfilter per course, cohort year, dan segmentasi demografis untuk insight real‑time.
 
 ## Menjalankan Sistem Machine Learning
-Jelaskan cara menjalankan protoype sistem machine learning yang telah dibuat. Selain itu, sertakan juga link untuk mengakses prototype tersebut.
+Prototype prediksi risiko mahasiswa disajikan via Streamlit app..
 
+1. Jalankan server Streamlit:
 ```
+    streamlit run app.py
+```
+2. Pilih mode Upload CSV atau Manual Entry di sidebar.
 
-```
+3. Lihat prediksi status (Dropout/Enrolled/Graduate) dengan warna label.
+
+Link prototype:
+
+https://adrianramadhan-educational-institutions-submission-app-5jb3uh.streamlit.app/
 
 ## Conclusion
-Jelaskan konklusi dari proyek yang dikerjakan.
+- Dengan model ML kami dapat memprediksi mahasiswa berisiko dropout dengan akurasi ~77 %.
 
-# Tabel Rekomendasi Penanganan Dropout
+- Dashboard Metabase memudahkan monitoring segmentasi risiko dan efektivitas intervensi.
+
+- Rekomendasi action items (peer‑mentor, beasiswa targeted, flexible scheduling, parent engagement) disusun berdasarkan insight dashboard.
+
+- Implementasi end‑to‑end (data → ML → dashboard → intervensi) siap dijalankan untuk menurunkan angka dropout minimal 20 % dalam dua semester ke depan.
+
+## Rekomendasi Action Items
 
 | No | Insight Utama | Action Item | KPI / Target | Pemilik | Waktu Implementasi |
 |----|---------------|-------------|--------------|---------|---------------------|
