@@ -23,17 +23,20 @@ Perusahaan Edutech “Jaya Jaya Learning” menyediakan platform pembelajaran da
 - Link Dataset : https://github.com/dicodingacademy/dicoding_dataset/blob/main/students_performance/data.csv
 
 **Setup environment**:  
-```bash
-# 1. Buat virtual environment
+
+1. Buat virtual environment
+```
 conda create -n edutech_ml python=3.11 -y
 conda activate edutech_ml
+```
 
-# 2. Install dependencies
+2. Install dependencies
+```
 pip install pandas scikit-learn matplotlib seaborn streamlit joblib sqlalchemy psycopg2-binary
+```
 
-# 3. (Optional) untuk Metabase: tidak perlu install, cukup koneksi ke Supabase
+3. (Optional) untuk Metabase: tidak perlu install, cukup koneksi ke Supabase
 - **Credential Supabase (untuk Metabase)**:
-
   - Host: `aws-0-ap-southeast-1.pooler.supabase.com`
   - Port: `6543`
   - Database: `postgres`
