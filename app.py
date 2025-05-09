@@ -12,7 +12,7 @@ import seaborn as sns
 from sklearn.preprocessing import LabelEncoder
 
 # Load trained model pipeline
-@st.cache(allow_output_mutation=True)
+@st.cache_resource()
 def load_model(path='./model/best_model.joblib'):
     return joblib.load(path)
 
@@ -29,9 +29,6 @@ st.markdown(
     """
 )
 
-# Sidebar: choose input mode
-st.sidebar.header('Input Options')
-input_mode = st.sidebar.selectbox('Pilih mode input:', ['Upload CSV', 'Manual Entry'])
 
 # Define base features
 feature_cols = [
@@ -163,36 +160,20 @@ def render_input():
             inputs[col] = st.sidebar.number_input(col, value=0)
     return pd.DataFrame([inputs])
 
-if input_mode == 'Upload CSV':
-    uploaded_file = st.sidebar.file_uploader('Upload file CSV', type='csv')
-    if uploaded_file:
-        data = pd.read_csv(uploaded_file, sep=';')
-        # compute engineered features
-        data['avg_sem_grade'] = (data['Curricular_units_1st_sem_grade'] + data['Curricular_units_2nd_sem_grade']) / 2
-        data['total_units_approved'] = data['Curricular_units_1st_sem_approved'] + data['Curricular_units_2nd_sem_approved']
-        st.subheader('Data Preview')
-        st.dataframe(data.head())
-        X = data[all_features]
-        preds_int = model.predict(X)
-        preds_label = le.inverse_transform(preds_int)
-        data['Predicted_Status'] = preds_label
-        st.subheader('Prediction Results')
-        styled = data[['Status','Predicted_Status']].style.format({'Predicted_Status': lambda v: f"**{v}**"}, escape=False)
-        st.dataframe(styled)
-else:
-    st.sidebar.subheader('Manual Entry')
-    input_df = render_input()
-    # compute engineered
-    input_df['avg_sem_grade'] = (input_df['Curricular_units_1st_sem_grade'] + input_df['Curricular_units_2nd_sem_grade']) / 2
-    input_df['total_units_approved'] = input_df['Curricular_units_1st_sem_approved'] + input_df['Curricular_units_2nd_sem_approved']
-    st.subheader('Input Data')
-    st.write(input_df)
-    preds_int = model.predict(input_df[all_features])
-    preds_label = le.inverse_transform(preds_int)
-    st.subheader('Prediction')
-    # color-coded label
-    color = 'red' if preds_label[0]=='Dropout' else ('green' if preds_label[0]=='Graduate' else 'blue')
-    st.markdown(f"<span style='color:{color}; font-size:24px; font-weight:bold'>{preds_label[0]}</span>", unsafe_allow_html=True)
+
+st.sidebar.subheader('Manual Entry')
+input_df = render_input()
+# compute engineered
+input_df['avg_sem_grade'] = (input_df['Curricular_units_1st_sem_grade'] + input_df['Curricular_units_2nd_sem_grade']) / 2
+input_df['total_units_approved'] = input_df['Curricular_units_1st_sem_approved'] + input_df['Curricular_units_2nd_sem_approved']
+st.subheader('Input Data')
+st.write(input_df)
+preds_int = model.predict(input_df[all_features])
+preds_label = le.inverse_transform(preds_int)
+st.subheader('Prediction')
+# color-coded label
+color = 'red' if preds_label[0]=='Dropout' else ('green' if preds_label[0]=='Graduate' else 'blue')
+st.markdown(f"<span style='color:{color}; font-size:24px; font-weight:bold'>{preds_label[0]}</span>", unsafe_allow_html=True)
 
 # EDA Section
 st.markdown('---')
